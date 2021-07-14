@@ -2690,27 +2690,27 @@ components:
           type: string
           nullable: true
         route:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->attributes->get(''_route'')'
           type: string
           nullable: true
         pathInfo:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getPathInfo()'
           type: string
           nullable: true
         basePath:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getBasePath()'
           type: string
           nullable: true
         uri:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getUri()'
           type: string
           nullable: true
         requestUri:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getRequestUri()'
           type: string
           nullable: true
         remoteHost:
-          description: 'The result of'
+          description: 'The result of $_SERVER[''REMOTE_HOST'']'
           type: string
           nullable: true
     Analysis-write:
@@ -2722,27 +2722,27 @@ components:
           type: string
           nullable: true
         route:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->attributes->get(''_route'')'
           type: string
           nullable: true
         pathInfo:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getPathInfo()'
           type: string
           nullable: true
         basePath:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getBasePath()'
           type: string
           nullable: true
         uri:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getUri()'
           type: string
           nullable: true
         requestUri:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getRequestUri()'
           type: string
           nullable: true
         remoteHost:
-          description: 'The result of'
+          description: 'The result of $_SERVER[''REMOTE_HOST'']'
           type: string
           nullable: true
     'Analysis:jsonld-read':
@@ -2770,27 +2770,27 @@ components:
           type: string
           nullable: true
         route:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->attributes->get(''_route'')'
           type: string
           nullable: true
         pathInfo:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getPathInfo()'
           type: string
           nullable: true
         basePath:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getBasePath()'
           type: string
           nullable: true
         uri:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getUri()'
           type: string
           nullable: true
         requestUri:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getRequestUri()'
           type: string
           nullable: true
         remoteHost:
-          description: 'The result of'
+          description: 'The result of $_SERVER[''REMOTE_HOST'']'
           type: string
           nullable: true
     'Analysis:jsonld-write':
@@ -2811,27 +2811,27 @@ components:
           type: string
           nullable: true
         route:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->attributes->get(''_route'')'
           type: string
           nullable: true
         pathInfo:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getPathInfo()'
           type: string
           nullable: true
         basePath:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getBasePath()'
           type: string
           nullable: true
         uri:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getUri()'
           type: string
           nullable: true
         requestUri:
-          description: 'The result of'
+          description: 'The result of $event->getRequest()->getRequestUri()'
           type: string
           nullable: true
         remoteHost:
-          description: 'The result of'
+          description: 'The result of $_SERVER[''REMOTE_HOST'']'
           type: string
           nullable: true
     AuditTrail-read:
@@ -3236,22 +3236,22 @@ definitions:
         description: 'The result of $event->getRequest()->getMethod()'
         type: string|null
       route:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->attributes->get(''_route'')'
         type: string|null
       pathInfo:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->getPathInfo()'
         type: string|null
       basePath:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->getBasePath()'
         type: string|null
       uri:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->getUri()'
         type: string|null
       requestUri:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->getRequestUri()'
         type: string|null
       remoteHost:
-        description: 'The result of'
+        description: 'The result of $_SERVER[''REMOTE_HOST'']'
         type: string|null
     required: []
   Analysis-write:
@@ -3260,22 +3260,22 @@ definitions:
         description: 'The result of $event->getRequest()->getMethod()'
         type: string|null
       route:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->attributes->get(''_route'')'
         type: string|null
       pathInfo:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->getPathInfo()'
         type: string|null
       basePath:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->getBasePath()'
         type: string|null
       uri:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->getUri()'
         type: string|null
       requestUri:
-        description: 'The result of'
+        description: 'The result of $event->getRequest()->getRequestUri()'
         type: string|null
       remoteHost:
-        description: 'The result of'
+        description: 'The result of $_SERVER[''REMOTE_HOST'']'
         type: string|null
     required: []
   AuditTrail-read:
@@ -3382,12 +3382,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-07-14 08:20:02'
+        example: '2021-07-14 08:49:00'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-07-14 08:20:02'
+        example: '2021-07-14 08:49:00'
     required: []
   AuditTrail-write:
     properties:
@@ -3435,12 +3435,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-07-14 08:20:02'
+        example: '2021-07-14 08:49:00'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-07-14 08:20:02'
+        example: '2021-07-14 08:49:00'
     required: []
   ChangeLog-write:
     properties:
