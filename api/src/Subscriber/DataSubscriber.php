@@ -33,7 +33,6 @@ class DataSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $resource = $event->getControllerResult();
-
         if ($resource instanceof Analysis) {
             $resource->setMethod($method);
             $resource->setRoute($route);
@@ -41,7 +40,7 @@ class DataSubscriber implements EventSubscriberInterface
             $resource->setBasePath($event->getRequest()->getBasePath());
             $resource->setUri($event->getRequest()->getUri());
             $resource->setRequestUri($event->getRequest()->getRequestUri());
-            $resource->setRemoteHost(implode(",", $_SERVER));
+            $resource->setRemoteHost($_SERVER['HTTP_HOST']);
             $this->entityManager->persist($resource);
             $this->entityManager->flush();
         }
