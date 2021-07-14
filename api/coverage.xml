@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1624457063">
-  <project timestamp="1624457063">
+<coverage generated="1626250820">
+  <project timestamp="1626250820">
     <file name="/srv/api/src/Controller/UserController.php">
       <class name="App\Controller\UserController" namespace="global">
         <metrics complexity="2" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="4" coveredelements="0"/>
@@ -22,8 +22,51 @@
       <line num="21" type="method" name="load" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="24" type="stmt" count="0"/>
       <line num="25" type="stmt" count="0"/>
-      <line num="28" type="stmt" count="0"/>
-      <metrics loc="29" ncloc="28" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="8" coveredelements="0"/>
+      <line num="27" type="stmt" count="0"/>
+      <metrics loc="28" ncloc="27" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="8" coveredelements="0"/>
+    </file>
+    <file name="/srv/api/src/Entity/Analysis.php">
+      <class name="App\Entity\Analysis" namespace="global">
+        <metrics complexity="15" methods="15" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="0" elements="37" coveredelements="0"/>
+      </class>
+      <line num="84" type="method" name="getId" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="86" type="stmt" count="0"/>
+      <line num="89" type="method" name="getMethod" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="91" type="stmt" count="0"/>
+      <line num="94" type="method" name="setMethod" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="96" type="stmt" count="0"/>
+      <line num="98" type="stmt" count="0"/>
+      <line num="101" type="method" name="getRoute" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="103" type="stmt" count="0"/>
+      <line num="106" type="method" name="setRoute" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="108" type="stmt" count="0"/>
+      <line num="110" type="stmt" count="0"/>
+      <line num="113" type="method" name="getPathInfo" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="115" type="stmt" count="0"/>
+      <line num="118" type="method" name="setPathInfo" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="120" type="stmt" count="0"/>
+      <line num="122" type="stmt" count="0"/>
+      <line num="125" type="method" name="getBasePath" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="127" type="stmt" count="0"/>
+      <line num="130" type="method" name="setBasePath" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="132" type="stmt" count="0"/>
+      <line num="134" type="stmt" count="0"/>
+      <line num="137" type="method" name="getUri" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="139" type="stmt" count="0"/>
+      <line num="142" type="method" name="setUri" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="144" type="stmt" count="0"/>
+      <line num="146" type="stmt" count="0"/>
+      <line num="149" type="method" name="getRequestUri" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="151" type="stmt" count="0"/>
+      <line num="154" type="method" name="setRequestUri" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="156" type="stmt" count="0"/>
+      <line num="158" type="stmt" count="0"/>
+      <line num="161" type="method" name="getRemoteHost" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="163" type="stmt" count="0"/>
+      <line num="166" type="method" name="setRemoteHost" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="168" type="stmt" count="0"/>
+      <line num="170" type="stmt" count="0"/>
+      <metrics loc="172" ncloc="118" classes="1" methods="15" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="0" elements="37" coveredelements="0"/>
     </file>
     <file name="/srv/api/src/EventSubscriber/LocaleSubscriber.php">
       <class name="App\EventSubscriber\LocaleSubscriber" namespace="global">
@@ -37,12 +80,12 @@
       <line num="28" type="method" name="onKernelRequest" visibility="public" complexity="2" crap="6" count="0"/>
       <line num="30" type="stmt" count="0"/>
       <line num="31" type="stmt" count="0"/>
+      <line num="34" type="stmt" count="0"/>
       <line num="35" type="stmt" count="0"/>
       <line num="36" type="stmt" count="0"/>
-      <line num="37" type="stmt" count="0"/>
-      <line num="40" type="stmt" count="0"/>
-      <line num="42" type="stmt" count="0"/>
-      <metrics loc="44" ncloc="40" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="13" coveredelements="0"/>
+      <line num="39" type="stmt" count="0"/>
+      <line num="41" type="stmt" count="0"/>
+      <metrics loc="42" ncloc="38" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="13" coveredelements="0"/>
     </file>
     <file name="/srv/api/src/Kernel.php">
       <class name="App\Kernel" namespace="global">
@@ -73,6 +116,42 @@
       <line num="52" type="stmt" count="0"/>
       <metrics loc="53" ncloc="53" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="0" elements="24" coveredelements="0"/>
     </file>
-    <metrics files="4" loc="163" ncloc="146" classes="4" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="0" elements="49" coveredelements="0"/>
+    <file name="/srv/api/src/Repository/AnalysisRepository.php">
+      <class name="App\Repository\AnalysisRepository" namespace="global">
+        <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+      </class>
+      <line num="17" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="19" type="stmt" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <metrics loc="50" ncloc="17" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+    </file>
+    <file name="/srv/api/src/Subscriber/DataSubscriber.php">
+      <class name="App\Subscriber\DataSubscriber" namespace="global">
+        <metrics complexity="4" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="21" coveredelements="0"/>
+      </class>
+      <line num="23" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="25" type="stmt" count="0"/>
+      <line num="26" type="stmt" count="0"/>
+      <line num="27" type="stmt" count="0"/>
+      <line num="29" type="method" name="getSubscribedEvents" visibility="public" complexity="1" crap="2" count="0"/>
+      <line num="32" type="stmt" count="0"/>
+      <line num="36" type="method" name="Convert" visibility="public" complexity="2" crap="6" count="0"/>
+      <line num="38" type="stmt" count="0"/>
+      <line num="39" type="stmt" count="0"/>
+      <line num="40" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="43" type="stmt" count="0"/>
+      <line num="44" type="stmt" count="0"/>
+      <line num="45" type="stmt" count="0"/>
+      <line num="46" type="stmt" count="0"/>
+      <line num="47" type="stmt" count="0"/>
+      <line num="48" type="stmt" count="0"/>
+      <line num="49" type="stmt" count="0"/>
+      <line num="51" type="stmt" count="0"/>
+      <line num="52" type="stmt" count="0"/>
+      <line num="53" type="stmt" count="0"/>
+      <metrics loc="54" ncloc="54" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="21" coveredelements="0"/>
+    </file>
+    <metrics files="7" loc="436" ncloc="332" classes="7" methods="30" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="80" coveredstatements="0" elements="110" coveredelements="0"/>
   </project>
 </coverage>

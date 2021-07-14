@@ -5,15 +5,746 @@ info:
   description: |
     API Details
     - Component: 
-    - Reference: proto-component-commonground
+    - Reference: server-analysis-service
     - Enviroment: dev
     - Version: V1.0
     - Repository: [online](https://github.com/ConductionNL/proto-component-commonground) / [zip](https://github.com/ConductionNL/proto-component-commonground/archive/master.zip)
     - Docker Image: [online]() 
-    - Datamodel: [postman](schema/proto-component-commonground.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
+    - Datamodel: [postman](schema/server-analysis-service.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
 
-    Het Proto Component vormt zowel de gemeenschappelijke basis onder alle componenten, als een “template” voor het maken van nieuwe componenten.         
+    De server analysis service is een component dat laat zien hoe verbindingsinformatie wordt doorgegeven naar een component op de server waar het component draait, en geeft deze informatie terug in een normale api.         
 paths:
+  /analyses:
+    get:
+      tags:
+        - Analysis
+      operationId: getAnalysisCollection
+      summary: 'Retrieves the collection of Analysis resources.'
+      responses:
+        200:
+          description: 'Analysis collection response'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Analysis:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string, nullable: true }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/json+ld:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Analysis:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string, nullable: true }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            application/json+health:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Analysis-read'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+        -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+    post:
+      tags:
+        - Analysis
+      operationId: postAnalysisCollection
+      summary: 'Creates a Analysis resource.'
+      responses:
+        201:
+          description: 'Analysis resource created'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Analysis:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Analysis:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+          links:
+            GetAnalysisItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getAnalysisItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /analyses/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Analysis:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Analysis:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+        description: 'The new Analysis resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/analyses/{id}':
+    get:
+      tags:
+        - Analysis
+      operationId: getAnalysisItem
+      summary: 'Retrieves a Analysis resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Analysis resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Analysis:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Analysis:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+    delete:
+      tags:
+        - Analysis
+      operationId: deleteAnalysisItem
+      summary: 'Removes the Analysis resource.'
+      responses:
+        204:
+          description: 'Analysis resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+    put:
+      tags:
+        - Analysis
+      operationId: putAnalysisItem
+      summary: 'Replaces the Analysis resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Analysis resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Analysis:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Analysis:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Analysis:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Analysis:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+        description: 'The updated Analysis resource'
+    patch:
+      tags:
+        - Analysis
+      operationId: patchAnalysisItem
+      summary: 'Updates the Analysis resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Analysis resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Analysis:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Analysis:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Analysis-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Analysis:jsonld-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Analysis-write'
+        description: 'The updated Analysis resource'
   /audit_trails:
     get:
       tags:
@@ -1943,6 +2674,166 @@ paths:
         description: 'The updated ChangeLog resource'
 components:
   schemas:
+    Analysis-read:
+      type: object
+      description: ''
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this resource'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+          format: uuid
+        method:
+          description: 'The result of $event->getRequest()->getMethod()'
+          type: string
+          nullable: true
+        route:
+          description: 'The result of'
+          type: string
+          nullable: true
+        pathInfo:
+          description: 'The result of'
+          type: string
+          nullable: true
+        basePath:
+          description: 'The result of'
+          type: string
+          nullable: true
+        uri:
+          description: 'The result of'
+          type: string
+          nullable: true
+        requestUri:
+          description: 'The result of'
+          type: string
+          nullable: true
+        remoteHost:
+          description: 'The result of'
+          type: string
+          nullable: true
+    Analysis-write:
+      type: object
+      description: ''
+      properties:
+        method:
+          description: 'The result of $event->getRequest()->getMethod()'
+          type: string
+          nullable: true
+        route:
+          description: 'The result of'
+          type: string
+          nullable: true
+        pathInfo:
+          description: 'The result of'
+          type: string
+          nullable: true
+        basePath:
+          description: 'The result of'
+          type: string
+          nullable: true
+        uri:
+          description: 'The result of'
+          type: string
+          nullable: true
+        requestUri:
+          description: 'The result of'
+          type: string
+          nullable: true
+        remoteHost:
+          description: 'The result of'
+          type: string
+          nullable: true
+    'Analysis:jsonld-read':
+      type: object
+      description: ''
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this resource'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+          format: uuid
+        method:
+          description: 'The result of $event->getRequest()->getMethod()'
+          type: string
+          nullable: true
+        route:
+          description: 'The result of'
+          type: string
+          nullable: true
+        pathInfo:
+          description: 'The result of'
+          type: string
+          nullable: true
+        basePath:
+          description: 'The result of'
+          type: string
+          nullable: true
+        uri:
+          description: 'The result of'
+          type: string
+          nullable: true
+        requestUri:
+          description: 'The result of'
+          type: string
+          nullable: true
+        remoteHost:
+          description: 'The result of'
+          type: string
+          nullable: true
+    'Analysis:jsonld-write':
+      type: object
+      description: ''
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        method:
+          description: 'The result of $event->getRequest()->getMethod()'
+          type: string
+          nullable: true
+        route:
+          description: 'The result of'
+          type: string
+          nullable: true
+        pathInfo:
+          description: 'The result of'
+          type: string
+          nullable: true
+        basePath:
+          description: 'The result of'
+          type: string
+          nullable: true
+        uri:
+          description: 'The result of'
+          type: string
+          nullable: true
+        requestUri:
+          description: 'The result of'
+          type: string
+          nullable: true
+        remoteHost:
+          description: 'The result of'
+          type: string
+          nullable: true
     AuditTrail-read:
       type: object
       description: 'An resource representing a log line.'
@@ -2334,58 +3225,58 @@ components:
           readOnly: true
           type: string
 definitions:
-  ChangeLog-read:
+  Analysis-read:
     properties:
       id:
-        description: 'The UUID identifier of this object'
+        description: 'The UUID identifier of this resource'
         type: string
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-      action:
-        description: ''
-        type: string
-      objectId:
-        description: ''
-        type: string
-      objectClass:
-        description: ''
-        type: string
-      version:
-        description: ''
-        type: int
-      data:
-        description: ''
-        type: array
-      username:
-        description: ''
-        type: string
-      session:
-        description: 'The moment this request was created'
-        type: string
-        maxLength: 255
-      dateCreated:
-        description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2021-06-23 14:04:23'
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2021-06-23 14:04:23'
+      method:
+        description: 'The result of $event->getRequest()->getMethod()'
+        type: string|null
+      route:
+        description: 'The result of'
+        type: string|null
+      pathInfo:
+        description: 'The result of'
+        type: string|null
+      basePath:
+        description: 'The result of'
+        type: string|null
+      uri:
+        description: 'The result of'
+        type: string|null
+      requestUri:
+        description: 'The result of'
+        type: string|null
+      remoteHost:
+        description: 'The result of'
+        type: string|null
     required: []
-  ChangeLog-write:
+  Analysis-write:
     properties:
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
+      method:
+        description: 'The result of $event->getRequest()->getMethod()'
+        type: string|null
+      route:
+        description: 'The result of'
+        type: string|null
+      pathInfo:
+        description: 'The result of'
+        type: string|null
+      basePath:
+        description: 'The result of'
+        type: string|null
+      uri:
+        description: 'The result of'
+        type: string|null
+      requestUri:
+        description: 'The result of'
+        type: string|null
+      remoteHost:
+        description: 'The result of'
+        type: string|null
     required: []
   AuditTrail-read:
     properties:
@@ -2491,12 +3382,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-06-23 14:04:23'
+        example: '2021-07-14 08:20:02'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-06-23 14:04:23'
+        example: '2021-07-14 08:20:02'
     required: []
   AuditTrail-write:
     properties:
@@ -2506,15 +3397,73 @@ definitions:
         example: 'This log line looks suspicius'
         maxLength: 2555
     required: []
+  ChangeLog-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      action:
+        description: ''
+        type: string
+      objectId:
+        description: ''
+        type: string
+      objectClass:
+        description: ''
+        type: string
+      version:
+        description: ''
+        type: int
+      data:
+        description: ''
+        type: array
+      username:
+        description: ''
+        type: string
+      session:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2021-07-14 08:20:02'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2021-07-14 08:20:02'
+    required: []
+  ChangeLog-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+    required: []
 tags:
   -
-    name: ChangeLog
+    name: Analysis
+    description: |+
+
+
+  -
+    name: AuditTrail
     description: |-
       An resource representing a log line.
 
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
-    name: AuditTrail
+    name: ChangeLog
     description: |-
       An resource representing a log line.
 
@@ -2525,20 +3474,20 @@ securityDefinitions:
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the AuditTrail resource'
-      write: 'write right to the AuditTrail resource'
+      read: 'read right to the ChangeLog resource'
+      write: 'write right to the ChangeLog resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the AuditTrail resource'
-      write: 'write right to the AuditTrail resource'
+      read: 'read right to the ChangeLog resource'
+      write: 'write right to the ChangeLog resource'
 host: irc.zaakonline.nl
 servers:
   -
     name: conduction.nl
-    url: proto-component-commonground.dev.conduction.nl
+    url: server-analysis-service.dev.conduction.nl
 externalDocs:
   -
     description: 'OAS Documentatie'
